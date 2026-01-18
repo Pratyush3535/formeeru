@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Meeru ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, #fff6f9, #ffeef4);
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* Floating hearts */
+.heart {
+  position: fixed;
+  bottom: -20px;
+  color: #ff5e8e;
+  font-size: 20px;
+  animation: floatUp 8s linear infinite;
+  opacity: 0.6;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-110vh); }
+}
+
+/* Floating cats & flowers */
+.floating {
+  position: fixed;
+  bottom: -30px;
+  animation: floatUp 10s linear infinite;
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.card {
+  background: #fff;
+  max-width: 420px;
+  margin: 50px auto;
+  padding: 28px;
+  border-radius: 22px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+  animation: fadeUp 0.8s ease;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden { display: none; }
+
+.title {
+  color: #ff5e8e;
+  font-weight: 700;
+}
+
+button {
+  background: #ff5e8e;
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(255,94,142,0.4);
+}
+</style>
+</head>
+
+<body>
+
+<!-- PASSWORD -->
+<script>
+const pass = prompt("This page is only for Meeru 💕\nEnter the secret word:");
+if (pass !== "meeru") {
+  document.body.innerHTML =
+  "<h2 style='margin-top:40vh;color:#ff5e8e'>Access Denied 💔</h2>";
+}
+</script>
+
+<!-- PAGE 1 -->
+<div class="card" id="page1">
+<h2 class="title">Hey Love! 💕</h2>
+<p>I wanted to do something special for you… so I made this just for you 🐱🌸</p>
+<button onclick="next(1)">Open My Heart 💌</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="card hidden" id="page2">
+<h2 class="title">A Love Letter 💖</h2>
+<p>
+My dearest <b>Meeru</b>,<br><br>
+You’re the calm I reach for and the smile that fixes everything.
+Every moment with you feels warm, real, and unforgettable.<br><br>
+I hope this tiny world made you smile —
+because you mean more to me than words ever could.<br><br>
+Forever yours,<br>
+in every little universe 🌙
+</p>
+<button onclick="next(2)">Continue ✨</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="card hidden" id="page3">
+<h2 class="title">A Playlist for You 🎶</h2>
+<p>Some feelings deserve music 🌸</p>
+
+<iframe style="border-radius:12px"
+src="https://open.spotify.com/embed/playlist/37i9dQZF1DX7gIoKXt0gmx"
+width="100%" height="380" frameborder="0"
+allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+</iframe>
+
+<button onclick="next(3)">One More Thing 💫</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="card hidden" id="page4">
+<h2 class="title">Some Special Cards 💌</h2>
+
+<p>You’re my favorite kind of memory — the one that makes me smile without trying 🐱❤️</p>
+<p>You make everything feel lighter, warmer, better 🌸✨</p>
+<p>Your expressions, your laughter, your little habits — all my favorites</p>
+
+<h3 style="color:#ff5e8e">— For Meeru, Always 💖</h3>
+
+<button onclick="seal()">Seal This Letter 💌</button>
+<button onclick="location.reload()">Restart 🔁</button>
+</div>
+
+<!-- CONFETTI -->
+<canvas id="confetti" style="position:fixed;top:0;left:0;pointer-events:none;z-index:3"></canvas>
+
+<script>
+function next(n) {
+  document.getElementById("page"+n).classList.add("hidden");
+  document.getElementById("page"+(n+1)).classList.remove("hidden");
+  if(n===3) startConfetti();
+}
+
+/* Hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(Math.random()*20+10)+"px";
+  h.style.animationDuration=(Math.random()*5+5)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+},600);
+
+/* Cats & flowers */
+const stickers=["🐱","🐈","🌸","🌷","🌼","🐾"];
+setInterval(()=>{
+  const f=document.createElement("div");
+  f.className="floating";
+  f.innerHTML=stickers[Math.floor(Math.random()*stickers.length)];
+  f.style.left=Math.random()*100+"vw";
+  f.style.fontSize=(Math.random()*25+18)+"px";
+  f.style.animationDuration=(Math.random()*6+6)+"s";
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),10000);
+},1200);
+
+/* Confetti */
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth; canvas.height=innerHeight;
+let pieces=[];
+
+function startConfetti(){
+  for(let i=0;i<150;i++){
+    pieces.push({
+      x:Math.random()*canvas.width,
+      y:Math.random()*canvas.height,
+      r:Math.random()*6+4,
+      d:Math.random()*5+2
+    });
+  }
+  animate();
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="#ff5e8e";
+  pieces.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y+=p.d;
+    if(p.y>canvas.height) p.y=0;
+  });
+  requestAnimationFrame(animate);
+}
+
+function seal(){
+  alert("This letter is sealed forever 💖\n— Only for Meeru 🐱🌸");
+}
+</script>
+
+</body>
+</html>
